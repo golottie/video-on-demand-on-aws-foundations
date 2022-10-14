@@ -100,15 +100,36 @@ const validSettings = {
                     "Type": "CMAF_GROUP_SETTINGS",
                     "CmafGroupSettings": {
                         "Destination": "s3://destinationbucket/guid/cmaf/",
+                        "Encryption": {
+                            "EncryptionMethod": "SAMPLE_AES",
+                            "SpekeKeyProvider": {
+                                "ResourceId": "<placeholder>",
+                                "Url": "http://example.com/speke",
+                                "DashSignaledSystemIds": ["foo"],
+                                "HlsSignaledSystemIds": ["bar"]
+                          },
+                          "Type": "SPEKE"
+                        }
                     }
                 }
-            },            {
+            },            
+            {
                 "Name": "CMAF_GROUP",
                 "CustomName":"Custom3",
                 "OutputGroupSettings": {
                     "Type": "CMAF_GROUP_SETTINGS",
                     "CmafGroupSettings": {
                         "Destination": "s3://destinationbucket/guid/cmaf/",
+                        "Encryption": {
+                            "EncryptionMethod": "SAMPLE_AES",
+                            "SpekeKeyProvider": {
+                                "ResourceId": "<placeholder>",
+                                "Url": "http://example.com/speke",
+                                "DashSignaledSystemIds": ["foo"],
+                                "HlsSignaledSystemIds": ["bar"]
+                          },
+                          "Type": "SPEKE"
+                        }
                     }
                 }
             },
