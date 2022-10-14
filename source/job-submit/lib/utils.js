@@ -63,6 +63,14 @@ const updateJobSettings = async (job, inputPath, outputPath, metadata, role) => 
         let mssNum = 1;
         let cmafNum = 1;
         job.Settings.Inputs[0].FileInput = inputPath;
+        const matches = decodeURIComponent(inputPath).match(/[^\/]+(?=\.[A-Za-z0-9]+$)/)
+        let resourceId = ""
+        try {
+            resourceId = matches[0].replace(/=/g, "")
+        } catch (err) {
+            throw Error(`Cannot extract resource ID from input file path: "${inputPath}"`)
+        }
+
         const outputGroups = job.Settings.OutputGroups;
         for (let group of outputGroups) {
             switch (group.OutputGroupSettings.Type) {
@@ -80,6 +88,7 @@ const updateJobSettings = async (job, inputPath, outputPath, metadata, role) => 
                     break;
                 case 'CMAF_GROUP_SETTINGS':
                     group.OutputGroupSettings.CmafGroupSettings.Destination = getPath(group, cmafNum++);
+                    group.OutputGroupSettings.CmafGroupSettings.Encryption.SpekeKeyProvider.ResourceId = resourceId;
                     break;
                 default:
                     throw Error('OutputGroupSettings.Type is not a valid type. Please check your job settings file.');
